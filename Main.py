@@ -5,7 +5,7 @@ from agents.EpsilonGreedyAgent import EpsilonGreedyAgent
 from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
 
 
-def show_results(bandit_results: type(BanditResults)) -> None:
+def show_results(bandit_results: BanditResults) -> None:
     print("\nAverage results")
     print("Step\tReward\tOptimal action (%)")
     average_rewards = bandit_results.get_average_rewards()
