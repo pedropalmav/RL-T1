@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+from matplotlib.ticker import PercentFormatter 
+
 from BanditResults import BanditResults
 from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
 
@@ -10,16 +13,42 @@ def show_results(bandit_results: BanditResults) -> None:
     for step in range(NUM_OF_STEPS):
         print(f"{step+1}\t{average_rewards[step]:0.3f}\t{optimal_action_percentage[step]:0.3f}")
 
+def plot_average_results(experiment_results: list[dict]) -> None:
+    plt.figure()
+    for experiment in experiment_results:
+        plt.plot(experiment["results"].get_average_rewards(), label=f"$\\epsilon={experiment['epsilon']}$")
+    plt.xlabel("Steps")
+    plt.ylabel("Average reward")
+    plt.legend()
+    plt.savefig("imgs/average_reward.png")
+
+def plot_optimal_action_percentage(experiment_results: list[dict]) -> None:
+    plt.figure()
+    for experiment in experiment_results:
+        plt.plot(experiment["results"].get_optimal_action_percentage(), label=f"$\\epsilon={experiment['epsilon']}$")
+    plt.xlabel("Steps")
+    plt.ylabel("Optimal action (%)")
+    plt.ylim(0, 1)
+    plt.gca().yaxis.set_major_formatter(PercentFormatter(1))
+    plt.legend()
+    plt.savefig("imgs/optimal_action.png")
+
 
 if __name__ == "__main__":
 
     NUM_OF_RUNS = 2000
     NUM_OF_STEPS = 1000
 
-    results = BanditResults()
-    for run_id in range(NUM_OF_RUNS):
-        algorithm = IncrementalSimpleBandit(seed=run_id, epsilon=0.1)
-        algorithm.run(NUM_OF_STEPS, results)
-        results.save_current_run()
+    epsilons = [0.1, 0.01, 0.0]
+    experiments_results = []
 
-    show_results(results)
+    for epsilon in epsilons:
+        results = BanditResults()
+        for run_id in range(NUM_OF_RUNS):
+            algorithm = IncrementalSimpleBandit(seed=run_id, epsilon=epsilon)
+            algorithm.run(NUM_OF_STEPS, results)
+            results.save_current_run()
+        experiments_results.append({"results": results, "epsilon": epsilon})
+
+    plot_average_results(experiments_results)
+    plot_optimal_action_percentage(experiments_results)
