@@ -1,7 +1,4 @@
-from BanditEnv import BanditEnv
 from BanditResults import BanditResults
-from agents.RandomAgent import RandomAgent
-from agents.EpsilonGreedyAgent import EpsilonGreedyAgent
 from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
 
 
