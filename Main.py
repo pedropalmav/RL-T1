@@ -1,6 +1,8 @@
 from BanditEnv import BanditEnv
 from BanditResults import BanditResults
 from agents.RandomAgent import RandomAgent
+from agents.EpsilonGreedyAgent import EpsilonGreedyAgent
+from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
 
 
 def show_results(bandit_results: type(BanditResults)) -> None:
@@ -19,16 +21,8 @@ if __name__ == "__main__":
 
     results = BanditResults()
     for run_id in range(NUM_OF_RUNS):
-        bandit = BanditEnv(seed=run_id)
-        num_of_arms = bandit.action_space
-        agent = RandomAgent(num_of_arms)  # here you might change the agent that you want to use
-        best_action = bandit.best_action
-        for _ in range(NUM_OF_STEPS):
-            action = agent.get_action()
-            reward = bandit.step(action)
-            agent.learn(action, reward)
-            is_best_action = action == best_action
-            results.add_result(reward, is_best_action)
+        algorithm = IncrementalSimpleBandit(seed=run_id, epsilon=0.1)
+        algorithm.run(NUM_OF_STEPS, results)
         results.save_current_run()
 
     show_results(results)
