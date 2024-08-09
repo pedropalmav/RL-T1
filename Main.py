@@ -1,5 +1,6 @@
+import os
 import matplotlib.pyplot as plt
-from matplotlib.ticker import PercentFormatter 
+from matplotlib.ticker import PercentFormatter
 
 from BanditResults import BanditResults
 from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
@@ -13,16 +14,16 @@ def show_results(bandit_results: BanditResults) -> None:
     for step in range(NUM_OF_STEPS):
         print(f"{step+1}\t{average_rewards[step]:0.3f}\t{optimal_action_percentage[step]:0.3f}")
 
-def plot_average_results(experiment_results: list[dict]) -> None:
+def plot_average_results(experiment_results: list[dict], filename: str = "average_rewards") -> None:
     plt.figure()
     for experiment in experiment_results:
         plt.plot(experiment["results"].get_average_rewards(), label=f"$\\epsilon={experiment['epsilon']}$")
     plt.xlabel("Steps")
     plt.ylabel("Average reward")
     plt.legend()
-    plt.savefig("imgs/average_reward.png")
+    plt.savefig(os.path.join("imgs", f"{filename}.png"))
 
-def plot_optimal_action_percentage(experiment_results: list[dict]) -> None:
+def plot_optimal_action_percentage(experiment_results: list[dict], filename: str = "optimal_action_percentage") -> None:
     plt.figure()
     for experiment in experiment_results:
         plt.plot(experiment["results"].get_optimal_action_percentage(), label=f"$\\epsilon={experiment['epsilon']}$")
@@ -31,7 +32,7 @@ def plot_optimal_action_percentage(experiment_results: list[dict]) -> None:
     plt.ylim(0, 1)
     plt.gca().yaxis.set_major_formatter(PercentFormatter(1))
     plt.legend()
-    plt.savefig("imgs/optimal_action.png")
+    plt.savefig(os.path.join("imgs", f"{filename}.png"))
 
 
 if __name__ == "__main__":
