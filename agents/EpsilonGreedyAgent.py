@@ -2,10 +2,10 @@ import random
 from agents.BaseAgent import BaseAgent
 
 class EpsilonGreedyAgent(BaseAgent):
-    def __init__(self, num_of_actions: int, epsilon: float):
+    def __init__(self, num_of_actions: int, epsilon: float, bias: int):
         self.num_of_actions = num_of_actions
         self.__epsilon = epsilon
-        self.q_values = [0] * num_of_actions
+        self.q_values = [bias] * num_of_actions
         self.action_counts = [0] * num_of_actions
 
     def get_action(self) -> int:
@@ -21,10 +21,10 @@ class EpsilonGreedyAgent(BaseAgent):
         self.q_values[action] = self.q_values[action] + (reward - self.q_values[action]) / self.action_counts[action]
 
 class ConstantStepAgent(BaseAgent):
-    def __init__(self, num_of_actions: int, epsilon: float, alpha: float):
+    def __init__(self, num_of_actions: int, epsilon: float, bias: int ,alpha: float):
         self.num_of_actions = num_of_actions
         self.__epsilon = epsilon
-        self.q_values = [0] * num_of_actions
+        self.q_values = [bias] * num_of_actions
         self.action_counts = [0] * num_of_actions
         self.__alpha = alpha
 
