@@ -13,7 +13,8 @@ class EpsilonGreedyAgent(BaseAgent):
             return random.randrange(self.num_of_actions)
         else:
             max_q_value = max(self.q_values)
-            return self.q_values.index(max_q_value)
+            max_idx = [i for i, q in enumerate(self.q_values) if q == max_q_value]
+            return random.choice(max_idx)
 
     def learn(self, action, reward) -> None:
         self.action_counts[action] += 1
