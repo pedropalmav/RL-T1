@@ -1,12 +1,15 @@
 from BanditEnv import BanditEnv
 from BanditResults import BanditResults
-from agents.EpsilonGreedyAgent import EpsilonGreedyAgent
+from agents.EpsilonGreedyAgent import EpsilonGreedyAgent, ConstantStepAgent
 
 class IncrementalSimpleBandit:
-    def __init__(self, seed: int, epsilon: float):
+    def __init__(self, seed: int, epsilon: float, step_size: float):
         self.bandit = BanditEnv(seed=seed)
         self.num_of_arms = self.bandit.action_space
-        self.agent = EpsilonGreedyAgent(num_of_actions=self.num_of_arms, epsilon=epsilon)
+        if step_size != 0:
+            self.agent = ConstantStepAgent(num_of_actions=self.num_of_arms, epsilon=epsilon, alpha = step_size)
+        else:
+            self.agent = EpsilonGreedyAgent(num_of_actions=self.num_of_arms, epsilon=epsilon)
         self.best_action = self.bandit.best_action
 
     def run(self, num_of_steps: int, results: BanditResults) -> None:

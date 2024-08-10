@@ -19,3 +19,23 @@ class EpsilonGreedyAgent(BaseAgent):
     def learn(self, action, reward) -> None:
         self.action_counts[action] += 1
         self.q_values[action] = self.q_values[action] + (reward - self.q_values[action]) / self.action_counts[action]
+
+class ConstantStepAgent(BaseAgent):
+    def __init__(self, num_of_actions: int, epsilon: float, alpha: float):
+        self.num_of_actions = num_of_actions
+        self.__epsilon = epsilon
+        self.q_values = [0] * num_of_actions
+        self.action_counts = [0] * num_of_actions
+        self.__alpha = alpha
+
+    def get_action(self) -> int:
+        if random.random() < self.__epsilon:
+            return random.randrange(self.num_of_actions)
+        else:
+            max_q_value = max(self.q_values)
+            max_idx = [i for i, q in enumerate(self.q_values) if q == max_q_value]
+            return random.choice(max_idx)
+
+    def learn(self, action, reward) -> None:
+        self.action_counts[action] += 1
+        self.q_values[action] = self.q_values[action] + self.__alpha * (reward - self.q_values[action]) 

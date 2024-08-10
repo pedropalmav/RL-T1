@@ -46,7 +46,7 @@ if __name__ == "__main__":
     for epsilon in epsilons:
         results = BanditResults()
         for run_id in range(NUM_OF_RUNS):
-            algorithm = IncrementalSimpleBandit(seed=run_id, epsilon=epsilon)
+            algorithm = IncrementalSimpleBandit(seed=run_id, epsilon=epsilon, step_size = 0) # 0 for variable step size
             algorithm.run(NUM_OF_STEPS, results)
             results.save_current_run()
         experiments_results.append({"results": results, "epsilon": epsilon})
