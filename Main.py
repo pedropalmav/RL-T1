@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 
 from BanditResults import BanditResults
-from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
+#from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
+from algorithms.GradientBandit import GradientBandit
 
 
 def show_results(bandit_results: BanditResults) -> None:
@@ -39,8 +40,9 @@ def plot_optimal_action_percentage(experiment_results: list[dict], filename: str
 
 if __name__ == "__main__":
 
-    NUM_OF_RUNS = 2000
+    NUM_OF_RUNS = 800
     NUM_OF_STEPS = 1000
+    """
     PREFIX = "a)" # Assignment excercise prefix
 
     #triplets -> (epsilon, bias, step_size)
@@ -63,4 +65,17 @@ if __name__ == "__main__":
 
     plot_average_results(experiments_results, PREFIX+" average_rewards")
     plot_optimal_action_percentage(experiments_results, PREFIX+" optimal_action_percentage")
+    print("Plots saved in imgs folder")
+    """
+    results = BanditResults()
+    alpha = 0.4
+    use_baseline = True
+    experiments_results = []
+    for run_id in range(NUM_OF_RUNS):
+        print(f"Run {run_id+1}/{NUM_OF_RUNS}")
+        algorithm = GradientBandit(seed=run_id, alpha=alpha, use_baseline=use_baseline)
+        algorithm.run(NUM_OF_STEPS, results)
+        results.save_current_run()
+    experiments_results.append({"results": results, "params": [alpha]})
+    plot_optimal_action_percentage(experiments_results, "f)"+" optimal_action_percentage")
     print("Plots saved in imgs folder")
