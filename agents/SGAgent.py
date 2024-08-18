@@ -2,28 +2,28 @@ import numpy as np
 from agents.BaseAgent import BaseAgent
 
 class SGAgent(BaseAgent):
-    def __init__(self, num_of_actions, alpha) -> int:
+    def __init__(self, num_of_actions, alpha):
         self.num_of_actions = num_of_actions
-        self.baseline = 0
+        self.alpha = alpha
         self.H = np.zeros(num_of_actions)
-        self.__alpha = alpha
         self.__policy = self.update_policy()
-
-    def update_policy(self) -> np.ndarray:
-        C = np.max(self.H)
-        policy =  np.exp(self.H - C) / np.sum(np.exp(self.H - C))
-        return policy
+        self.baseline = 0
+    
 
     def get_action(self) -> int:
-        return np.argmax(self.__policy)
-
+        return np.random.choice(range(self.num_of_actions), p=self.__policy)
+    
+    def update_policy(self)-> np.ndarray:
+        C = np.max(self.H)
+        return np.exp(self.H - C) / np.sum(np.exp(self.H - C))
+    
+    def update_baseline(self, reward, step) -> None:
+        self.baseline +=  (reward - self.baseline) / step
+    
     def learn(self, action, reward) -> None:
         for a in range(self.num_of_actions):
             if a == action:
-                self.H[a] += self.__alpha * (reward - self.baseline) * (1 - self.__policy[a])
+                self.H[a] += reward + self.alpha * (reward - self.baseline) * (1 - self.__policy[a])
             else:
-                self.H[a] += self.__alpha * (reward - self.baseline) * -1 * self.__policy[a]
-            self.__policy = self.update_policy()
-
-    def update_baseline(self, reward, step) -> None:
-        self.baseline += (reward - self.baseline) / step
+                self.H[a] += reward + self.alpha * (reward - self.baseline) * (0 - self.__policy[a])
+        self.__policy = self.update_policy()
