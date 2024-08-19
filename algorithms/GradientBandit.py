@@ -13,7 +13,6 @@ class GradientBandit(BaseAlgorithm):
 
     def run(self, num_of_steps: int, results: BanditResults) -> None:
         for step in range(num_of_steps):
-            #self.agent.update_policy()
             action = self.agent.get_action()
             reward = self.bandit.step(action)
             self.agent.learn(action, reward)
