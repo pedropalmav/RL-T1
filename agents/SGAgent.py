@@ -6,8 +6,8 @@ class SGAgent(BaseAgent):
         self.num_of_actions = num_of_actions
         self.alpha = alpha
         self.H = np.zeros(num_of_actions)
-        self.__policy = self.update_policy()
         self.baseline = 0
+        self.__policy = self.update_policy()
     
 
     def get_action(self) -> int:

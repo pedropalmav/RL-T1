@@ -7,11 +7,11 @@ class IncrementalSimpleBandit(BaseAlgorithm):
     def __init__(self, seed: int, epsilon: float,  bias: float = 0, step_size: float = 0):
         self.bandit = BanditEnv(seed=seed)
         self.num_of_arms = self.bandit.action_space
+        self.best_action = self.bandit.best_action
         if step_size != 0:
             self.agent = ConstantStepAgent(num_of_actions=self.num_of_arms, epsilon=epsilon, bias=bias, alpha=step_size)
         else:
             self.agent = EpsilonGreedyAgent(num_of_actions=self.num_of_arms, epsilon=epsilon, bias=bias)
-        self.best_action = self.bandit.best_action
 
     def run(self, num_of_steps: int, results: BanditResults) -> None:
         for _ in range(num_of_steps):
