@@ -1,8 +1,9 @@
 from BanditEnv import BanditEnv
 from BanditResults import BanditResults
 from agents.SGAgent import SGAgent
+from algorithms.BaseAlgorithm import BaseAlgorithm
 
-class GradientBandit:
+class GradientBandit(BaseAlgorithm):
     def __init__(self, seed: int, alpha: float, use_baseline: bool = False):
         self.bandit = BanditEnv(seed=seed, mean = 4.0)
         self.num_of_arms = self.bandit.action_space

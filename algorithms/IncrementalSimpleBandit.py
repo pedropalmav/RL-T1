@@ -1,8 +1,9 @@
 from BanditEnv import BanditEnv
 from BanditResults import BanditResults
 from agents.EpsilonGreedyAgent import EpsilonGreedyAgent, ConstantStepAgent
+from algorithms.BaseAlgorithm import BaseAlgorithm
 
-class IncrementalSimpleBandit:
+class IncrementalSimpleBandit(BaseAlgorithm):
     def __init__(self, seed: int, epsilon: float,  bias: float = 0, step_size: float = 0):
         self.bandit = BanditEnv(seed=seed)
         self.num_of_arms = self.bandit.action_space
