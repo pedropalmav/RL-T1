@@ -22,8 +22,5 @@ class SGAgent(BaseAgent):
     
     def learn(self, action, reward) -> None:
         for a in range(self.num_of_actions):
-            if a == action:
-                self.H[a] += reward + self.alpha * (reward - self.baseline) * (1 - self.__policy[a])
-            else:
-                self.H[a] += reward + self.alpha * (reward - self.baseline) * (0 - self.__policy[a])
+            self.H[a] += reward + self.alpha * (reward - self.baseline) * (int(a == action) - self.__policy[a])
         self.__policy = self.update_policy()
