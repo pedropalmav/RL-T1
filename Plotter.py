@@ -7,6 +7,7 @@ class Plotter:
     def plot_average_results(experiment_results: list[dict], filename: str = "average_rewards") -> None:
         plt.figure()
         for experiment in experiment_results:
+            # TODO: Refactor to show the right label
             plt.plot(experiment["results"].get_average_rewards(), 
                     label=f"$\\epsilon={experiment['params'][0]}$")
         plt.xlabel("Steps")

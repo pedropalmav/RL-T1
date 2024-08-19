@@ -6,6 +6,7 @@ from BanditResults import BanditResults
 #from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
 from algorithms.GradientBandit import GradientBandit
 from Plotter import Plotter
+from ResultsWritter import ResultsWritter
 
 
 def show_results(bandit_results: BanditResults) -> None:
@@ -54,6 +55,9 @@ if __name__ == "__main__":
         algorithm = GradientBandit(seed=run_id, alpha=alpha, use_baseline=use_baseline) 
         algorithm.run(NUM_OF_STEPS, results)
         results.save_current_run()
+    
+    # TODO: Create ExperimentResults class to store results and params
     experiments_results.append({"results": results, "params": [alpha]})
     Plotter.plot_optimal_action_percentage(experiments_results, "f)"+" optimal_action_percentage")
+    ResultsWritter.write_optimal_action_percentage(results, "optimal_action_percentage")
     print("Plots saved to imgs folder")
