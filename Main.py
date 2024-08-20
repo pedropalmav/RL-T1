@@ -7,6 +7,7 @@ from BanditResults import BanditResults
 from algorithms.GradientBandit import GradientBandit
 from Plotter import Plotter
 from ResultsWritter import ResultsWritter
+from experiments.Experiment import Experiment
 
 
 def show_results(bandit_results: BanditResults) -> None:
@@ -22,42 +23,29 @@ if __name__ == "__main__":
 
     NUM_OF_RUNS = 2000
     NUM_OF_STEPS = 1000
-    """
-    PREFIX = "a)" # Assignment excercise prefix
 
-    #triplets -> (epsilon, bias, step_size)
-    params = [(0.1, 0, 0),
-              (0.01, 0, 0),
-              (0.0, 0, 0)]
-    #params = [(0.1, 0, 0.1 ),
-    #          (0.0, 5, 0.1)]
+    experiment = Experiment(runs=NUM_OF_RUNS, steps=NUM_OF_STEPS)
+    experiment.run()
+    # Plotter.plot_average_results(experiment.results, "a) average_rewards")
+
+
+    # Gradient Bandit
+    # params = [(0.1, True),
+    #           (0.1, False),
+    #           (0.4, True),
+    #           (0.4, False)]
     
-    experiments_results = []
-
-    for triplet in params:
-        results = BanditResults()
-        epsilon, bias, step_size = triplet
-        for run_id in range(NUM_OF_RUNS):
-            algorithm = IncrementalSimpleBandit(seed=run_id, epsilon=epsilon, bias=bias, step_size=step_size) 
-            algorithm.run(NUM_OF_STEPS, results)
-            results.save_current_run()
-        experiments_results.append({"results": results, "params": triplet})
-
-    plot_average_results(experiments_results, PREFIX+" average_rewards")
-    plot_optimal_action_percentage(experiments_results, PREFIX+" optimal_action_percentage")
-    print("Plots saved in imgs folder")
-    """
-    results = BanditResults()
-    alpha = 0.1
-    use_baseline = True
-    experiments_results = []
-    for run_id in range(NUM_OF_RUNS):
-        algorithm = GradientBandit(seed=run_id, alpha=alpha, use_baseline=use_baseline) 
-        algorithm.run(NUM_OF_STEPS, results)
-        results.save_current_run()
-    
-    # TODO: Create ExperimentResults class to store results and params
-    experiments_results.append({"results": results, "params": [alpha]})
-    Plotter.plot_optimal_action_percentage(experiments_results, "f)"+" optimal_action_percentage")
-    ResultsWritter.write_optimal_action_percentage(results, "optimal_action_percentage")
-    print("Plots saved to imgs folder")
+    # experiments_results = []
+    # for param in params:    
+    #     results = BanditResults()
+    #     alpha, use_baseline = param
+    #     for run_id in range(NUM_OF_RUNS):
+    #         algorithm = GradientBandit(seed=run_id, alpha=alpha, use_baseline=use_baseline) 
+    #         algorithm.run(NUM_OF_STEPS, results)
+    #         results.save_current_run()
+        
+    #     # TODO: Create ExperimentResults class to store results and params
+    #     experiments_results.append({"results": results, "params": [alpha]})
+    # Plotter.plot_optimal_action_percentage(experiments_results, "f)"+" optimal_action_percentage")
+    # # ResultsWritter.write_optimal_action_percentage(results, "optimal_action_percentage")
+    # print("Plots saved to imgs folder")
