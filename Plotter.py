@@ -8,8 +8,9 @@ class Plotter:
         plt.figure()
         for experiment in experiment_results:
             # TODO: Refactor to show the right label
+            label = Plotter.generate_label(experiment["params"])
             plt.plot(experiment["results"].get_average_rewards(), 
-                    label=f"$\\epsilon={experiment['params'][0]}$")
+                    label=label)
         plt.xlabel("Steps")
         plt.ylabel("Average reward")
         plt.legend()
@@ -27,3 +28,20 @@ class Plotter:
         plt.gca().yaxis.set_major_formatter(PercentFormatter(1))
         plt.legend()
         plt.savefig(os.path.join("imgs", f"{filename}.png"))
+
+    @staticmethod
+    def generate_label(params: dict) -> str:
+        label = ""
+        for key, value in params.items():
+            label += Plotter.label_for_param(key, value)
+        return label[:-2]
+    
+    @staticmethod
+    def label_for_param(key: str, value: float) -> str:
+        if key == "bias":
+            return f"$Q_1={value}$, "
+        if key == "epsilon" or key == "alpha":
+            return f"$\\{key}={value}$, "
+        if key == "baseline":
+            return f"{'with' if value else 'without'} baseline, "
+        return ""
