@@ -29,24 +29,3 @@ if __name__ == "__main__":
     experiment.run()
     # Plotter.plot_average_results(experiment.results, "a) average_rewards")
     Plotter.plot_optimal_action_percentage(experiment.results, "f) optimal_action_percentage")
-
-    # Gradient Bandit
-    # params = [(0.1, True),
-    #           (0.1, False),
-    #           (0.4, True),
-    #           (0.4, False)]
-    
-    # experiments_results = []
-    # for param in params:    
-    #     results = BanditResults()
-    #     alpha, use_baseline = param
-    #     for run_id in range(NUM_OF_RUNS):
-    #         algorithm = GradientBandit(seed=run_id, alpha=alpha, use_baseline=use_baseline) 
-    #         algorithm.run(NUM_OF_STEPS, results)
-    #         results.save_current_run()
-        
-    #     # TODO: Create ExperimentResults class to store results and params
-    #     experiments_results.append({"results": results, "params": [alpha]})
-    # Plotter.plot_optimal_action_percentage(experiments_results, "f)"+" optimal_action_percentage")
-    # # ResultsWritter.write_optimal_action_percentage(results, "optimal_action_percentage")
-    # print("Plots saved to imgs folder")
