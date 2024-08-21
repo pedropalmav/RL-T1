@@ -2,6 +2,7 @@ import os
 
 from BanditResults import BanditResults
 from algorithms.AlgorithmCatalog import AlgorithmCatalog
+from algorithms.AlgorithmOption import AlgorithmOption
 from experiments.ExperimentOption import ExperimentOption
 from ParamsReader import ParamsReader
 
@@ -41,7 +42,7 @@ class Experiment:
             results = BanditResults()
             for run_id in range(self.__runs):
                 triplet["seed"] = run_id
-                algorithm = AlgorithmCatalog.get_algorithm("IncrementalSimpleBandit", triplet)
+                algorithm = AlgorithmCatalog.get_algorithm(AlgorithmOption.INCREMENTAL_SIMPLE_BANDIT, triplet)
                 algorithm.run(self.__steps, results)
                 results.save_current_run()
             # TODO: modify to add params showed in the plot
