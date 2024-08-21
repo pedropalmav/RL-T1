@@ -1,14 +1,6 @@
-import os
-import matplotlib.pyplot as plt
-from matplotlib.ticker import PercentFormatter
-
 from BanditResults import BanditResults
-#from algorithms.IncrementalSimpleBandit import IncrementalSimpleBandit
-from algorithms.GradientBandit import GradientBandit
 from Plotter import Plotter
-from ResultsWritter import ResultsWritter
 from experiments.Experiment import Experiment
-from ParamsReader import ParamsReader
 
 
 def show_results(bandit_results: BanditResults) -> None:
