@@ -1,0 +1,12 @@
+[
+    {
+        "epsilon": 0.1,
+        "bias": 0,
+        "step_size": 0.1
+    },
+    {
+        "epsilon": 0.0,
+        "bias": 5,
+        "step_size": 0.1
+    }
+]
