@@ -42,6 +42,6 @@ class Plotter:
             return f"$Q_1={value}$, "
         if key == "epsilon" or key == "alpha":
             return f"$\\{key}={value}$, "
-        if key == "baseline":
+        if key == "use_baseline":
             return f"{'with' if value else 'without'} baseline, "
         return ""

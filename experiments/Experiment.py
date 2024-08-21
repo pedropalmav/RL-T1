@@ -71,7 +71,7 @@ class Experiment:
             case ExperimentOption.OPTIMISTIC_INITIAL_VALUES:
                 return ["epsilon", "bias"]
             case ExperimentOption.GRADIENT_BANDIT:
-                return ["alpha", "use_baseline"]
+                return ["alpha"]
             case _:
                 raise ValueError("Invalid option")
 
