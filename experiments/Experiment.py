@@ -24,7 +24,7 @@ class Experiment:
         print("Select experiment to run:")
         for option in ExperimentOption:
             print(f"{option.value}) {option.name.replace('_', ' ').title()}")
-        selected_option = int(input("Option: "))
+        selected_option = int(input("\nOption: "))
         self.selected_experiment = ExperimentOption(selected_option)
 
     def get_params_path(self, option: ExperimentOption) -> str:
@@ -50,8 +50,9 @@ class Experiment:
                 raise ValueError("Invalid option")
 
     def run(self) -> None:
+        print("\nRunning experiment...")
+        # Each curve in plot is referred as method in the book
         for method_params in self.experiment_params:
-            # TODO: create a method for this loop
             results = BanditResults()
             for run_id in range(self.__runs):
                 method_params["seed"] = run_id
@@ -87,5 +88,5 @@ class Experiment:
         Plotter.plot_optimal_action_percentage(self.results, filename)
 
     def select_filename(self, plot_name: str) -> str:
-        print(f"Enter filename for {plot_name} plot")
+        print(f"\nEnter filename for {plot_name} plot")
         return input()
