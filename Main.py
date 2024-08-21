@@ -1,5 +1,4 @@
 from BanditResults import BanditResults
-from Plotter import Plotter
 from experiments.Experiment import Experiment
 
 
