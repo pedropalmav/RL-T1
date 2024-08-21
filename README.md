@@ -2,18 +2,43 @@
 Code for the first assignment of the course IIC3675 - Reinforcement Learning
 
 ## Experiment replication
-To replicate reported plots, first clone this repo and then run `Main.py`.
-Depending on the experiment you're replicating, you need to make some minor changes to `Main.py`, details below.
-### General info
+To replicate reported plots, first clone this repo and then run `Main.py` as follows:
 
-We refactor the main loop implementation, wrapping the orgin
+```bash
+python Main.py
 ```
+Depending on your Python installation, this may vary `python` to `python3`.
 
-```
-The main loops iterates over `params`, wich is a list of tuples where each tuple contains parameters taken as input by the agent, namely `(epsilon, bias, step_size)`. In other words, it will run an experiment for each parameter tuple in the list.
+At first the program will ask you to select the experiment to replicate, giving three options: **Epsilon Greedy**, **Optimistic Initial Values** and **Gradient Bandit**. Once you have selected an experiment, it will execute 2000 runs with a 1000 steps each. Finally, the program will ask you the names you want to give to the generated plots, which will be saved on the `imgs/` folder.
 
-If `step_size` is set to  0, the algorithm will instantiate a variable step agent. Otherwise, it will use a constant step agent, with $\alpha$ = `step_size`.
+> [!WARNING]
+> The **Gradient Bandit** experiment takes considerably more execution time than the other two. To give you a perspective, a **Gradient Bandit** execution takes about two minutes while the others take about 15 seconds.
 
-### Experiment A  (from book Fig. 2.2)
+Below is a reference of what you should get by selection each option.
 
-### Experiment C (from book Fig. 2.3)
+### Epsilon Greedy  (from book Fig. 2.2)
+
+First, you will have to name the average rewards plot, which should look like this:
+
+
+![Epsilon Greedy Average Rewards](./imgs/a\)%20average_rewards.png)
+
+Then, the program will ask you the name for the optimal action percentage plot, which should be similar to the following:
+
+
+![Epsilon Greedy Optimal Action Percentage](./imgs/a\)%20optimal_action_percentage.png)
+
+### Optimistic Initial Values (from book Fig. 2.3)
+
+The generated plot for this experiment should be looking like this:
+
+
+![Optimistic Initial Optimal Action Percentage](./imgs/c\)%20optimal_action_percentage.png)
+### Gradient Bandit (from book Fig. 2.5)
+
+The generated plot should be similar to this:
+
+![Gradient Bandit Optimal Action Percentage](./imgs/f\)%20optimal_action_percentage.png)
+
+> [!NOTE]
+> The blue and green curves are the methods with baseline, whereas the orange and red are the methods without baseline.
