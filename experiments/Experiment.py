@@ -15,16 +15,16 @@ class Experiment:
         self.setup_experiment()
 
     def setup_experiment(self) -> None:
-        selected_option = self.select_experiment()
-        self.params = ParamsReader.read_params(self.get_params_path(selected_option))
-        self.algorithm = self.get_experiment_algorithm(selected_option)
+        self.select_experiment()
+        self.experiment_params = ParamsReader.read_params(self.get_params_path(self.selected_experiment))
+        self.algorithm = self.get_experiment_algorithm(self.selected_experiment)
 
-    def select_experiment(self) -> ExperimentOption:
+    def select_experiment(self) -> None:
         print("Select experiment to run:")
         for option in ExperimentOption:
             print(f"{option.value}) {option.name.replace('_', ' ').title()}")
         selected_option = int(input("Option: "))
-        return ExperimentOption(selected_option)
+        self.selected_experiment = ExperimentOption(selected_option)
 
     def get_params_path(self, option: ExperimentOption) -> str:
         match(option):
@@ -49,13 +49,31 @@ class Experiment:
                 raise ValueError("Invalid option")
 
     def run(self) -> None:
-        for triplet in self.params:
+        for method_params in self.experiment_params:
             # TODO: create a method for this loop
             results = BanditResults()
             for run_id in range(self.__runs):
-                triplet["seed"] = run_id
-                algorithm = AlgorithmCatalog.get_algorithm(self.algorithm, triplet)
+                method_params["seed"] = run_id
+                algorithm = AlgorithmCatalog.get_algorithm(self.algorithm, method_params)
                 algorithm.run(self.__steps, results)
                 results.save_current_run()
-            # TODO: modify to add params showed in the plot
-            self.results.append({"results": results, "params": triplet})
+            self.add_method_result(results, method_params)
+
+    def add_method_result(self, results: BanditResults, params: dict) -> None:
+        filter_keys = self.get_filter_keys()
+        filtered_params = self.filter_params(params, filter_keys)
+        self.results.append({"results": results, "params": filtered_params})
+
+    def get_filter_keys(self) -> list:
+        match(self.selected_experiment):
+            case ExperimentOption.EPSILON_GREEDY:
+                return ["epsilon"]
+            case ExperimentOption.OPTIMISTIC_INITIAL_VALUES:
+                return ["epsilon", "bias"]
+            case ExperimentOption.GRADIENT_BANDIT:
+                return ["alpha", "use_baseline"]
+            case _:
+                raise ValueError("Invalid option")
+
+    def filter_params(self, params: dict, keys: list) -> dict:
+        return {key: params[key] for key in keys}
