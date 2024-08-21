@@ -7,7 +7,6 @@ class Plotter:
     def plot_average_results(experiment_results: list[dict], filename: str = "average_rewards") -> None:
         plt.figure()
         for experiment in experiment_results:
-            # TODO: Refactor to show the right label
             label = Plotter.generate_label(experiment["params"])
             plt.plot(experiment["results"].get_average_rewards(), 
                     label=label)
@@ -20,8 +19,9 @@ class Plotter:
     def plot_optimal_action_percentage(experiment_results: list[dict], filename: str = "optimal_action_percentage") -> None:
         plt.figure()
         for experiment in experiment_results:
+            label = Plotter.generate_label(experiment["params"])
             plt.plot(experiment["results"].get_optimal_action_percentage(),
-                    label=f"$\\epsilon={experiment['params'][0]}$")
+                    label=label)
         plt.xlabel("Steps")
         plt.ylabel("Optimal action (%)")
         plt.ylim(0, 1)
