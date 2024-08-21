@@ -27,7 +27,8 @@ if __name__ == "__main__":
 
     experiment = Experiment(runs=NUM_OF_RUNS, steps=NUM_OF_STEPS)
     experiment.run()
-    Plotter.plot_average_results(experiment.results, "a) average_rewards")
+    # Plotter.plot_average_results(experiment.results, "a) average_rewards")
+    Plotter.plot_optimal_action_percentage(experiment.results, "f) optimal_action_percentage")
 
     # Gradient Bandit
     # params = [(0.1, True),
