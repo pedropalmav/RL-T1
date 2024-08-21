@@ -1,10 +1,11 @@
 import os
 
 from BanditResults import BanditResults
+from ParamsReader import ParamsReader
+from Plotter import Plotter
 from algorithms.AlgorithmCatalog import AlgorithmCatalog
 from algorithms.AlgorithmOption import AlgorithmOption
 from experiments.ExperimentOption import ExperimentOption
-from ParamsReader import ParamsReader
 
 class Experiment:
 
@@ -77,3 +78,14 @@ class Experiment:
 
     def filter_params(self, params: dict, keys: list) -> dict:
         return {key: params[key] for key in keys}
+    
+    def plot_results(self) -> None:
+        if self.selected_experiment == ExperimentOption.EPSILON_GREEDY:
+            filename = self.select_filename("average rewards")
+            Plotter.plot_average_results(self.results, filename)
+        filename = self.select_filename("optimal action percentage")
+        Plotter.plot_optimal_action_percentage(self.results, filename)
+
+    def select_filename(self, plot_name: str) -> str:
+        print(f"Enter filename for {plot_name} plot")
+        return input()
