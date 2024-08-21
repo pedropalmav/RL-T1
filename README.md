@@ -1,7 +1,7 @@
 # Bandits :slot_machine:
 Code for the first assignment of the course IIC3675 - Reinforcement Learning
 
-## Experiment replication
+## Experiment replication :test_tube:
 To replicate reported plots, first clone this repo and then run `Main.py` as follows:
 
 ```bash
