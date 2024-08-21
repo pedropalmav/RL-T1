@@ -8,6 +8,7 @@ from algorithms.GradientBandit import GradientBandit
 from Plotter import Plotter
 from ResultsWritter import ResultsWritter
 from experiments.Experiment import Experiment
+from ParamsReader import ParamsReader
 
 
 def show_results(bandit_results: BanditResults) -> None:
@@ -26,8 +27,7 @@ if __name__ == "__main__":
 
     experiment = Experiment(runs=NUM_OF_RUNS, steps=NUM_OF_STEPS)
     experiment.run()
-    # Plotter.plot_average_results(experiment.results, "a) average_rewards")
-
+    Plotter.plot_average_results(experiment.results, "a) average_rewards")
 
     # Gradient Bandit
     # params = [(0.1, True),
