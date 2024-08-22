@@ -15,8 +15,8 @@ class GradientBandit(BaseAlgorithm):
         for step in range(num_of_steps):
             action = self.agent.get_action()
             reward = self.bandit.step(action)
-            self.agent.learn(action, reward)
             if self.use_baseline:
                self.agent.update_baseline(reward, step + 1)
+            self.agent.learn(action, reward)
             is_best_action = action == self.best_action
             results.add_result(reward, is_best_action)
