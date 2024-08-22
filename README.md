@@ -47,7 +47,7 @@ However, our implementation updates the baseline ($\bar{R}$) and then learns (up
 For more details please check the [GradientBandit.py](https://github.com/pedropalmav/RL-T1/blob/main/algorithms/GradientBandit.py) file and also the report included for the assignment.
 
 
-The generated plot should be similar to this:
+The generated plot from this experiment should be similar to this:
 
 ![Gradient Bandit Optimal Action Percentage](./imgs/f\)%20optimal_action_percentage.png)
 
