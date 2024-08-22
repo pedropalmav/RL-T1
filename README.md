@@ -36,6 +36,15 @@ The generated plot for this experiment should be looking like this:
 ![Optimistic Initial Optimal Action Percentage](./imgs/c\)%20optimal_action_percentage.png)
 ### Gradient Bandit (from book Fig. 2.5)
 
+An important aspect to mention is that the implementation has some difference with the version from class, which has the following pseudocode:
+
+![Gradient Bandit pseudocode](./imgs/gradient_bandit_pseudocode.png)
+
+However, our implementation updates the baseline ($\bar{R}$) and then learns (updates $H$). This was done following the footnote on pg. 37 of the book which says: "In the empirical results in this chapter, the baseline $\bar{R}_t$ also included $R_t$".
+
+For more details please check the [GradientBandit.py](https://github.com/pedropalmav/RL-T1/blob/main/algorithms/GradientBandit.py) file and also the report included for the assignment.
+
+
 The generated plot should be similar to this:
 
 ![Gradient Bandit Optimal Action Percentage](./imgs/f\)%20optimal_action_percentage.png)
